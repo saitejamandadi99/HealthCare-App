@@ -16,10 +16,10 @@ const getAllDoctorsList = (req, res) =>{
 
 const getDoctorDetails = (req,res) =>{
     const doctorId = req.params.id;
-    const doctor = doctors.find(eachDoctor => eachDoctor.id =doctorId);
+    const doctor = doctors.find(eachDoctor => eachDoctor.id === doctorId);
     try{
         if(!doctor){
-            return res.status(404),json({message:'Doctor not found'}) //404 = not found code
+            return res.status(404).json({message:'Doctor not found'}) //404 = not found code
         }
         res.status(200).json({message:'Doctors details fetched successfully', doctorDetails: doctor}); //200 = ok or success code
     }
