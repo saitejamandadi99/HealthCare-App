@@ -4,13 +4,18 @@ const bookAppointment = (req, res) =>{
     try {
         const {name, doctorId, date} = req.body;
     if (!name || !doctorId || !date){
-        res.status(400).json({message:'All fields are required'}); //400 = bad request code
-        return;
+       return res.status(400).json({message:'All fields are required'}); //400 = bad request code
+        
     }
-    res.status(201).json({message:'Appointment booked successfully', appointment :{name,doctorId, date}})
+    const doctorExists = doctors.some(doc => doc.id === doctorId);
+    if (!doctorExists) {
+    return res.status(404).json({ message: 'Doctor not found' });
+    }
+    appointments.push({ name, doctorId, date });    
+    return res.status(201).json({message:'Appointment booked successfully', appointment :{name,doctorId, date}})
 
     } catch (error) {
-        res.status(500).json({message: 'Internal Server Error'}); //500 = server error code
+        return res.status(500).json({message: 'Internal Server Error'}); //500 = server error code
     }
 }
 
