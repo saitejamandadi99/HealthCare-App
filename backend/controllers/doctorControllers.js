@@ -8,9 +8,9 @@ const getAllDoctorsList = (req, res) =>{
         specialization:eachDoctor.specialization,
     }));
     try {
-        res.status(200).json({message:'Doctors list fetched successfully', doctorsList:previewDoctors}); //200 = success code
+       return res.status(200).json({message:'Doctors list fetched successfully', doctorsList:previewDoctors}); //200 = success code
     } catch (error) {
-        res.status(500).json({message: 'Internal Server Error'}); //500 = server error code
+       return res.status(500).json({message: 'Internal Server Error'}); //500 = server error code
     }
 }
 
@@ -21,10 +21,11 @@ const getDoctorDetails = (req,res) =>{
         if(!doctor){
             return res.status(404).json({message:'Doctor not found'}) //404 = not found code
         }
-        res.status(200).json({message:'Doctors details fetched successfully', doctorDetails: doctor}); //200 = ok or success code
+        return res.status(200).json({message:'Doctors details fetched successfully', doctorDetails: doctor}); //200 = ok or success code
     }
     catch(error){
-        res.status(500).json({message: 'Internal Server Error'}); //500 = server error code
+       return  res.status(500).json({message: 'Internal Server Error'}); //500 = server error code
     }
 }
 
+module.exports = {getAllDoctorsList, getDoctorDetails};
