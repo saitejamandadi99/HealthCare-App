@@ -35,7 +35,7 @@ const DoctorPage = () =>{
           <p><strong>Specialization:</strong> {doctorDetails.specialization}</p>
           <img src={doctorDetails.image} alt={doctorDetails.name} className="w-32 h-32 rounded-full mb-2" />
           <p><strong>Availability:</strong> {doctorDetails.availability}</p>
-          <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" >
             Schedule Appointment    
           </button>
         </div>
