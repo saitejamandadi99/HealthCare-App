@@ -51,6 +51,8 @@ const LandingPage = () =>{
       {filteredDoctors.map(doctor => (
             <DoctorCard key={doctor.id} doctor={doctor} />
       ))}
+      {error && <p className="error" style={{color:'red'}}>{error}</p>}
+      {successMessage && <p className="success" style={{color:'green'}}>{successMessage}</p>}
     </div>
   )
 }
