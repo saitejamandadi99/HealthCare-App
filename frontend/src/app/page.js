@@ -47,11 +47,10 @@ const LandingPage = () =>{
         <input type='search' onChange={e=>setSearchField(e.target.value)} placeholder='search a doctor name' />
         
       </div>
-      {filteredDoctors.length > 0 && (
-        filteredDoctors.map(doctor=>(
-          <DoctorCard key={doctor.id} doctor={doctor} />
-        ))
-      )}
+      {filteredDoctors.length === 0 && <p>No doctors found</p>}
+      {filteredDoctors.map(doctor => (
+            <DoctorCard key={doctor.id} doctor={doctor} />
+      ))}
     </div>
   )
 }
