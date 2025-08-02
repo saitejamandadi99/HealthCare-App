@@ -6,6 +6,8 @@ const getAllDoctorsList = (req, res) =>{
         id:eachDoctor.id, 
         name: eachDoctor.name, 
         specialization:eachDoctor.specialization,
+        image: eachDoctor.image,
+        availability: eachDoctor.availability,
     }));
     try {
        return res.status(200).json({message:'Doctors list fetched successfully', doctorsList:previewDoctors}); //200 = success code

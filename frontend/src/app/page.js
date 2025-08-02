@@ -2,6 +2,7 @@
 
 import {useState, useEffect,useMemo} from 'react';
 import axios from 'axios';
+import DoctorCard from '@/components/doctorCard';
 
 const LandingPage = () =>{
   const [doctorsList , setDoctorsList] = useState([]);
@@ -33,7 +34,7 @@ const LandingPage = () =>{
     }
     fetchDoctors();
   },[]);
-  const filteredDoctors = useMemo(() => {
+  const filteredDoctors = useMemo(() => { //used useMemo to optimize performance by remembering the filtered results untill the dependecies changes. works fine without it but used to avoid unnecessary re-renders.
     return doctorsList.filter((doctor) =>
       doctor.name.toLowerCase().includes(searchField.toLowerCase())
     );
@@ -48,10 +49,7 @@ const LandingPage = () =>{
       </div>
       {filteredDoctors.length > 0 && (
         filteredDoctors.map(doctor=>(
-          <div key={doctor.id}>
-            <h2>{doctor.name}</h2>
-            <p>Specialization: {doctor.specialization}</p>
-          </div>
+          <DoctorCard key={doctor.id} doctor={doctor} />
         ))
       )}
     </div>
