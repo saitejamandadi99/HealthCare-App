@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
+import Loader from '@/components/loader'; 
 
 const DoctorPage = () => {
   const { id } = useParams();
@@ -33,7 +34,7 @@ const DoctorPage = () => {
     <div className="container mt-5">
       <h1 className="mb-4">Doctor Details</h1>
 
-      {loading && <div className="alert alert-info">Loading...</div>}
+      {loading && <Loader />}
 
       {doctorDetails ? (
         <div className="card p-4">
