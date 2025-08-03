@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import Link from 'next/link'; 
+import Link from 'next/link';
 import axios from 'axios';
 
 const DoctorPage = () => {
@@ -30,30 +30,39 @@ const DoctorPage = () => {
   }, [id]);
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-2">Doctor Details</h1>
-      {loading && <p>Loading...</p>}
-      {doctorDetails ? (
-        <div className="bg-white p-4 rounded shadow">
-          <p><strong>Name:</strong> {doctorDetails.name}</p>
-          <p><strong>Specialization:</strong> {doctorDetails.specialization}</p>
-          <img
-            src={doctorDetails.image}
-            alt={doctorDetails.name}
-            className="w-32 h-32 rounded-full mb-2"
-          />
-          <p><strong>Availability:</strong> {doctorDetails.availability}</p>
+    <div className="container mt-5">
+      <h1 className="mb-4">Doctor Details</h1>
 
-          <Link href={`/appointment/${doctorDetails.id}`}>
-            <button className="mt-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-              Schedule Appointment
-            </button>
-          </Link>
+      {loading && <div className="alert alert-info">Loading...</div>}
+
+      {doctorDetails ? (
+        <div className="card p-4">
+          <div className="row g-3">
+            <div className="col-md-4 text-center">
+              <img
+                src={doctorDetails.image}
+                alt={doctorDetails.name}
+                className="img-fluid rounded-circle"
+                style={{ maxWidth: '200px' }}
+              />
+            </div>
+            <div className="col-md-8">
+              <h3>{doctorDetails.name}</h3>
+              <p><strong>Specialization:</strong> {doctorDetails.specialization}</p>
+              <p><strong>Availability:</strong> {doctorDetails.availability}</p>
+              <Link href={`/appointment/${doctorDetails.id}`} passHref>
+                <button className="btn btn-success mt-3">
+                  Schedule Appointment
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
       ) : (
-        <p>No doctor found</p>
+        !loading && <div className="alert alert-warning">No doctor found</div>
       )}
-      {error && <p className="text-red-500">{error}</p>}
+
+      {error && <div className="alert alert-danger mt-3">{error}</div>}
     </div>
   );
 };

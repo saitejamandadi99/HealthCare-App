@@ -22,7 +22,7 @@ const LandingPage = () => {
           setSuccessMessage(response.data.message || 'Doctors fetched successfully');
         }
       } catch (error) {
-        setError('Failed to fetch doctors: ' + error.message);
+        setError('Failed to fetch doctors');
       } finally {
         setLoading(false);
       }
@@ -37,41 +37,33 @@ const LandingPage = () => {
   }, [doctorsList, searchField]);
 
   return (
-    <div className="container py-4">
-      <h1 className="text-center mb-3">Welcome to the HealthCare Portal</h1>
-      <p className="text-center mb-4">Search and schedule appointments for free.</p>
+    <div className="container mt-4">
+      <h1 className="mb-3 text-center">Welcome to the HealthCare App</h1>
+      <p className="text-center">Check the doctors available and schedule the appointments for free of cost</p>
 
-      <div className="mb-4 d-flex justify-content-center">
-        <input
-          type="search"
-          onChange={e => setSearchField(e.target.value)}
-          placeholder="Search doctor by name"
-          className="form-control w-50"
-        />
+      <div className="row justify-content-center mb-4">
+        <div className="col-md-6">
+          <input
+            type="search"
+            className="form-control"
+            onChange={e => setSearchField(e.target.value)}
+            placeholder="Search doctor by name"
+          />
+        </div>
       </div>
 
       {error && <p className="text-danger text-center">{error}</p>}
       {successMessage && <p className="text-success text-center">{successMessage}</p>}
 
-      {loading ? (
-        <div className="text-center">
-          <div className="spinner-border text-primary" role="status"></div>
-        </div>
-      ) : (
-        <>
-          {filteredDoctors.length === 0 ? (
-            <p className="text-center">No doctors found</p>
-          ) : (
-            <div className="row">
-              {filteredDoctors.map(doctor => (
-                <div key={doctor.id} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                  <DoctorCard doctor={doctor} />
-                </div>
-              ))}
-            </div>
-          )}
-        </>
-      )}
+      <div className="row">
+        {filteredDoctors.length === 0 ? (
+          <p className="text-center">No doctors found</p>
+        ) : (
+          filteredDoctors.map(doctor => (
+            <DoctorCard key={doctor.id} doctor={doctor} />
+          ))
+        )}
+      </div>
     </div>
   );
 };
