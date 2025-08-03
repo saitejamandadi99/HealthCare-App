@@ -1,23 +1,33 @@
-let appointments = []
+let appointments = [];
 const doctors = require('../data/doctors');
-const bookAppointment = (req, res) =>{
-    try {
-        console.log("Request Body:", req.body);
-        const {name, doctorId, date} = req.body;
-    if (!name || !doctorId || !date){
-       return res.status(400).json({message:'All fields are required'}); //400 = bad request code
-        
+
+const bookAppointment = (req, res) => {
+  try {
+    console.log("Request Body:", req.body);
+    const doctorId = req.params.id;
+    const { name, email, date } = req.body;
+
+    if (!name || !email || !date || !doctorId) {
+      return res.status(400).json({ message: 'All fields are required' });
     }
+
     const doctorExists = doctors.some(doc => doc.id === doctorId);
     if (!doctorExists) {
-    return res.status(404).json({ message: 'Doctor not found' });
+      return res.status(404).json({ message: 'Doctor not found' });
     }
-    appointments.push({ name, doctorId, date });    
-    return res.status(201).json({message:'Appointment booked successfully', appointment :{name,doctorId, date}})
 
-    } catch (error) {
-        return res.status(500).json({message: 'Internal Server Error'}); //500 = server error code
-    }
-}
+    const appointment = { name, email, doctorId, date };
+    appointments.push(appointment);
 
- module.exports =  bookAppointment;
+    return res.status(201).json({
+      message: 'Appointment booked successfully',
+      appointment,
+    });
+
+  } catch (error) {
+    console.error("Error booking appointment:", error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+module.exports = bookAppointment;
