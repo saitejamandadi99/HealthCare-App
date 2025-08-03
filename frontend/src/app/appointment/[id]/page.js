@@ -59,7 +59,7 @@ const Appointment = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-2">Book Appointment with Dr. {doctor?.name}</h2>
+      <h2 className="text-2xl font-bold mb-2">Book Appointment with {doctor?.name}</h2>
       <p className="mb-4">Specialization: {doctor?.specialization}</p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md">
         <input
