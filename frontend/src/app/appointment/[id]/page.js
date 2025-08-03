@@ -21,8 +21,8 @@ const Appointment = () => {
     const fetchDoctor = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/doctors/${id}`);
-        setDoctor(res.data);
-        console.log("Doctor Details:", res.data);
+        setDoctor(res.data.doctorDetails);
+        console.log("Doctor Details:", res.data.doctorDetails);
       } catch (err) {
         setError('Doctor not found');
       }
