@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import DoctorCard from '@/components/doctorCard';
+import Loader from '@/components/loader';
 
 const LandingPage = () => {
   const [doctorsList, setDoctorsList] = useState([]);
@@ -55,15 +56,19 @@ const LandingPage = () => {
       {error && <p className="text-danger text-center">{error}</p>}
       {successMessage && <p className="text-success text-center">{successMessage}</p>}
 
-      <div className="row">
-        {filteredDoctors.length === 0 ? (
-          <p className="text-center">No doctors found</p>
-        ) : (
-          filteredDoctors.map(doctor => (
-            <DoctorCard key={doctor.id} doctor={doctor} />
-          ))
-        )}
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="row">
+          {filteredDoctors.length === 0 ? (
+            <p className="text-center">No doctors found</p>
+          ) : (
+            filteredDoctors.map(doctor => (
+              <DoctorCard key={doctor.id} doctor={doctor} />
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 };
