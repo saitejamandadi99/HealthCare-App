@@ -2,6 +2,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Loader from '@/components/loader'; 
 
 const Appointment = () => {
   const { id } = useParams();
@@ -13,7 +14,8 @@ const Appointment = () => {
     email: '',
     date: '',
   });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // For form submission
+  const [initialLoading, setInitialLoading] = useState(true); // For doctor fetch
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -22,9 +24,10 @@ const Appointment = () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/doctors/${id}`);
         setDoctor(res.data.doctorDetails);
-        console.log("Doctor Details:", res.data.doctorDetails);
       } catch (err) {
         setError('Doctor not found');
+      } finally {
+        setInitialLoading(false);
       }
     };
 
@@ -52,12 +55,12 @@ const Appointment = () => {
     }
   };
 
-  if (!doctor) return <p>Loading doctor info...</p>;
+  if (initialLoading) return <Loader />;
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-2">Book Appointment with Dr. {doctor.name}</h2>
-      <p className="mb-4">Specialization: {doctor.specialization}</p>
+      <h2 className="text-2xl font-bold mb-2">Book Appointment with Dr. {doctor?.name}</h2>
+      <p className="mb-4">Specialization: {doctor?.specialization}</p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md">
         <input
           required
@@ -85,12 +88,13 @@ const Appointment = () => {
           onChange={handleChange}
           className="border p-2"
         />
+
         <button
           type="submit"
-          className="bg-blue-600 text-black py-2 rounded hover:bg-blue-700"
           disabled={loading}
+          className={`py-2 rounded bg-blue-600 text-black hover:bg-blue-700 flex justify-center items-center`}
         >
-          {loading ? 'Booking...' : 'Book Appointment'}
+          {loading ? <Loader small /> : 'Book Appointment'}
         </button>
 
         {error && <p className="text-red-600">{error}</p>}
