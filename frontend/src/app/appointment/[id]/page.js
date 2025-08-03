@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Appointment = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const router = useRouter();
 
   const [doctor, setDoctor] = useState(null);
@@ -22,6 +22,7 @@ const Appointment = () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/doctors/${id}`);
         setDoctor(res.data);
+        console.log("Doctor Details:", res.data);
       } catch (err) {
         setError('Doctor not found');
       }
@@ -56,8 +57,8 @@ const Appointment = () => {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-2">Book Appointment with Dr. {doctor.name}</h2>
-      <p>Specialization: {doctor.specialization}</p>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4 max-w-md">
+      <p className="mb-4">Specialization: {doctor.specialization}</p>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md">
         <input
           required
           type="text"
@@ -86,7 +87,7 @@ const Appointment = () => {
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          className="bg-blue-600 text-black py-2 rounded hover:bg-blue-700"
           disabled={loading}
         >
           {loading ? 'Booking...' : 'Book Appointment'}
@@ -94,10 +95,11 @@ const Appointment = () => {
 
         {error && <p className="text-red-600">{error}</p>}
         {successMessage && <p className="text-green-600">{successMessage}</p>}
+
         <button
           type="button"
           onClick={() => router.push('/')}
-          className="text-blue-600 underline"
+          className="bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300"
         >
           Go Back
         </button>
